@@ -8,9 +8,10 @@ chapter/*.typにチャプターごとの記述をしてmain.typでincludeして�
 ## typst初心者向け
 簡単に使い方をまとめています。
 
-typstインストールして`typst compile main.typ output.pdf`を叩いてください。
+~~typstインストールして`typst compile main.typ output.pdf`を叩いてください。
 
-(インストール方法は調べてください)
+(インストール方法は調べてください)~~
+tutorial.pdf読んでください
 
 # reference
 [Typstのここがすごい！](https://qiita.com/hikoharu14142/items/aa8cfb70d079b0324fba)

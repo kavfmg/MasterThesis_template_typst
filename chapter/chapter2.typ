@@ -20,7 +20,7 @@
   === ほらね
 ]
 こういうshowルール、setルールを適用すると普通は以下全てのコンテンツに適用されてしまう。
-今の場合見出し1.1.2だけ50ptで表示したければ、
+今の場合見出し2.1.2だけ50ptで表示したければ、
 ```typst
 #[
   #show heading.where(level: 3): set text(50pt)
@@ -404,7 +404,7 @@ $
 これがまた素晴らしいもんで、ある程度書いたのちにどっか計算ミスが発覚！とかなった場合に関連する場所全て計算し直すとかしなくても大元の数字(今の例で言うchar_texとか)を変更してしまえば全ての箇所に変更が行き渡るのでとても助かる。`calc.~~`と書くことで計算できる。どんな計算ができるかについては#link("https://typst.app/docs/reference/foundations/calc/", [こちら])を参照。
 
 == リンク
-`#link("https:hogehoge.jp", [リンク先])`で#link("https:hogehoge.jp", [リンク先])こうなる。リンクが下線+青字となっているのは再びmain-template内で
+`#link("https://hogehoge.jp", [リンク先])`で#link("https://hogehoge.jp", [リンク先])こうなる。リンクが下線+青字となっているのは再びmain-template内で
 ```typst
 #show link: it => {
   underline[#text(blue, it)]
@@ -438,12 +438,11 @@ figureや数式に対するrefの方法は@sec_figure, @sec_equation にて既�
 ```typst
 #set par(
   spacing: 0.65em,
-  first-line-indent: 1em,
+  first-line-indent: (amount: 1em, all: true),
   justify: true,
 )
 ```
-first-line-indentというのが段落始めにインデントを入れるものなのだが、英語文書にならってか日本語文書であってもセクション最初のパラグラフにおいてはインデントされない。自力で段落始めだけ全角スペース入れるか、それでよしとしてしまうか。headingに対して直後に高さ0ptのパラグラフを入れるようにshowするという解決方法もある。
-
+first-line-indentというのが段落始めにインデントを入れる設定。デフォルトでは英語文書に倣ってかセクション最初のパラグラフに関してはインデントしないようになっているが、`all: true`を入れることでこれを回避している。英語で書く場合にはこれを外しておこう。
 
 == page
 ページ設定は`page`を使う。今の設定は以下

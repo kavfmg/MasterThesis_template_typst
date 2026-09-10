@@ -65,7 +65,7 @@
       counter(heading).at(it.element.location()).at(0)
     } else if type(current_chapter.numbering) == str {
       let app_num = counter(heading).at(it.element.location()).at(0)
-      alph.at(app_num - 1)
+      numbering("A", app_num)
     } else {"panic!!"}
     let fignum = numbering("1.1", ..it.element.counter.at(loc))
 
@@ -89,7 +89,7 @@
       counter(heading).at(it.element.location()).at(0)
     } else if type(current_chapter.numbering) == str {
       let app_num = counter(heading).at(it.element.location()).at(0)
-      alph.at(app_num - 1)
+      numbering("A", app_num)
     } else {"panic!!"}
     let fignum = numbering("1.1", ..it.element.counter.at(loc))
 

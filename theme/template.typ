@@ -1,5 +1,4 @@
 #import "header_components.typ"
-#let alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 #let outline-header(doc) = {
   set page(
@@ -50,7 +49,7 @@
   )
   #set par(
     spacing: 0.65em,
-    first-line-indent: 1em,
+    first-line-indent: (amount: 1em, all: true),
     justify: true,
   )
   #set math.equation(numbering: it => {
@@ -125,12 +124,12 @@
     counter(figure.where(kind: table)).update(0)
     counter(math.equation).update(0)
     let hdr = counter(heading).get().at(0)
-    let title-content = [#text(30pt, font: "Hiragino Kaku Gothic ProN", [#h(5pt)#str(alph.at(hdr - 1)) \ #it.body])]
+    let title-content = [#text(30pt, font: "Hiragino Kaku Gothic ProN", [#h(5pt)#str(numbering("A", hdr)) \ #it.body])]
     block(title-content, below: 1.5em)
   }
   set figure(numbering: it => {
     let hdr = counter(heading).get().at(0)
-    [#alph.at(hdr - 1).#it]
+    [#numbering("A", hdr).#it]
   })
 
   doc
@@ -226,3 +225,31 @@
     )[#body]
   ]
 }
+
+#let depth = counter("list_depth")
+// #let freeze = state("list_freeze", false)
+// #let smaller_list(dd: .9em, ddd: .85em) = it => context{
+//   if freeze.get() {
+//     freeze.update(false)
+//     it
+//   } else {
+//     depth.step()
+//     context {
+//       set text(size: dd) if depth.get().first() == 2
+//       set text(size: ddd) if depth.get().first() == 3
+//       it
+//     }
+//     depth.update(i => i - 1)
+//   }
+// }
+#let smaller_list(dd: .9em, ddd: .85em) = it => context {
+  depth.step()
+  context {
+    set text(size: dd) if depth.get().first() == 2
+    set text(size: ddd) if depth.get().first() == 3
+    it
+  }
+  depth.update(i => i - 1)
+}
+
+#let math-ul(doc) = box(stroke: (bottom: 1.2pt), outset: (bottom: 4pt), doc)

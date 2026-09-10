@@ -1,4 +1,4 @@
 *.pdf
 ref/
 .DS_Store
-!main.pdf
+!tutorial.pdf
