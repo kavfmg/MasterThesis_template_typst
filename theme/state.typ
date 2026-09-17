@@ -1,7 +1,7 @@
 #import "../theme/template.typ": *
 
 #let thesis(title, prelude, main, app, ack) = {
-  set text(lang: "ja", font: "Hiragino Mincho ProN")
+  set text(lang: "ja", font: "Hiragino Mincho ProN", size: 11pt)
   { title }
   // abstruct + outline
   {
