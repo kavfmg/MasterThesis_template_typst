@@ -35,6 +35,7 @@
     #include "chapter/chapter1.typ"
     #include "chapter/chapter2.typ"
     #include "chapter/chapter3.typ"
+    #include "listtest.typ"
   ],
   [
     #include "chapter/appendix1.typ"

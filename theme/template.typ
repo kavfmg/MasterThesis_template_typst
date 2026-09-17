@@ -227,27 +227,34 @@
 }
 
 #let depth = counter("list_depth")
-// #let freeze = state("list_freeze", false)
-// #let smaller_list(dd: .9em, ddd: .85em) = it => context{
-//   if freeze.get() {
-//     freeze.update(false)
+// #let smaller_list(dd: .9em, ddd: .85em) = it => {
+//   depth.step()
+//   context {
+//     set text(size: dd) if depth.get().first() == 2
+//     set text(size: ddd) if depth.get().first() == 3
 //     it
-//   } else {
-//     depth.step()
-//     context {
-//       set text(size: dd) if depth.get().first() == 2
-//       set text(size: ddd) if depth.get().first() == 3
-//       it
-//     }
-//     depth.update(i => i - 1)
 //   }
+//   depth.update(i => i - 1)
 // }
-#let smaller_list(dd: .9em, ddd: .85em) = it => context {
+#let smaller_list(dd: .9em, ddd: .85em) = it => {
+  let is_dd_em = dd.abs == 0pt
+  let is_ddd_em = ddd.abs == 0pt
+  let current_d_size = text.size
+
+  let size_depth2 = if is_dd_em { current_d_size * dd.em } else { dd.abs }
+  let size_depth3 = if is_dd_em { current_d_size * ddd.em / dd.em } else { ddd.abs }
+
   depth.step()
   context {
-    set text(size: dd) if depth.get().first() == 2
-    set text(size: ddd) if depth.get().first() == 3
-    it
+    let d = depth.get().first()
+    if d == 2 {
+      set text(size_depth2)
+      it
+    } else if d == 3 {
+      set text(size_depth3)
+      it
+    } else { it }
+    // depth4以上も対応させたかったら適宜else ifを追加して貰えば
   }
   depth.update(i => i - 1)
 }
