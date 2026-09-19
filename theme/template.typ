@@ -227,15 +227,6 @@
 }
 
 #let depth = counter("list_depth")
-// #let smaller_list(dd: .9em, ddd: .85em) = it => {
-//   depth.step()
-//   context {
-//     set text(size: dd) if depth.get().first() == 2
-//     set text(size: ddd) if depth.get().first() == 3
-//     it
-//   }
-//   depth.update(i => i - 1)
-// }
 #let smaller_list(dd: .9em, ddd: .85em) = it => {
   let is_dd_em = dd.abs == 0pt
   let is_ddd_em = ddd.abs == 0pt
