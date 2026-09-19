@@ -88,13 +88,13 @@ place(right)を使いたい時ってのは単に右側に置きたいだけで�
 
 === smaller_list
 デフォルトではlistは深さによらず全て同じ文字サイズで出力される。
-- タイトル
-- 本文
-  - イントロ
-    - 背景
-    - 動機
-  - 内容
-    - hogehoge
+- タイトル #context text.size
+- 本文 #context text.size
+  - イントロ #context text.size
+    - 背景 #context text.size
+    - 動機 #context text.size
+  - 内容 #context text.size
+    - hogehoge #context text.size
 人によっては深さによって文字サイズを小さくしたいと考えるだろう、筆者もスライド作る時にはよくそう思う。そういう時に使うもの。
 
 #grid(
@@ -102,20 +102,20 @@ place(right)を使いたい時ってのは単に右側に置きたいだけで�
   [
     ```typst
     #show list: smaller_list()
-    - タイトル
-    - 本文
-      - イントロ
-        - 背景
-        - 動機
+    - タイトル #context text.size
+    - 本文 #context text.size
+      - イントロ #context text.size
+        - 背景 #context text.size
+        - 動機 #context text.size
     ```
   ],
   [
     #show list: smaller_list()
-    - タイトル
-    - 本文
-      - イントロ
-        - 背景
-        - 動機
+    - タイトル #context text.size
+    - 本文 #context text.size
+      - イントロ #context text.size
+        - 背景 #context text.size
+        - 動機 #context text.size
   ],
 )
 このように引数に何もつけなければデフォルトで0.9em, 0.85emにする。level4以降については筆者は使っていないので設定しておらずそのままだと1emで表示される。このデフォルト値を変更したければ普通にtemplateの中でデフォルト値を書き換えるかsetすればいいだけだが、デフォルト値をいじった結果templateをimportしているすべてのファイルで形状が変わったらわけわからん#footnote[筆者が普段ノート取る時にはちょっとこういうの気になるというだけで、修論テンプレとして使う場合には特に問題にはならんだろう]のでmain冒頭で設定できるように、ということで引数として`dd`,`ddd`を受け取れるようにしている。それぞれdepth2,3の文字サイズを与える。
@@ -124,26 +124,20 @@ place(right)を使いたい時ってのは単に右側に置きたいだけで�
   [
     ```typst
     #show list: smaller_list(dd: 1.2em, ddd: 0.5em)
-    - タイトル
-    - 本文
-      - イントロ
-        - 背景
-        - 動機
-    - #context text.size
-      - #context text.size
-        - #context text.size
+    - タイトル #context text.size
+    - 本文 #context text.size
+      - イントロ #context text.size
+        - 背景 #context text.size
+        - 動機 #context text.size
     ```
   ],
   [
     #show list: smaller_list(dd: 1.2em, ddd: 0.5em)
-    - タイトル
-    - 本文
-      - イントロ
-        - 背景
-        - 動機
-    - #context text.size
-      - #context text.size
-        - #context text.size
+    - タイトル #context text.size
+    - 本文 #context text.size
+      - イントロ #context text.size
+        - 背景 #context text.size
+        - 動機 #context text.size
   ],
 )
 文字サイズはem指定でもpt指定でもおけ。ちなみに、リストの文字サイズを変更する方法をすでに紹介している先達がいた(#link("https://zenn.dev/ngoat_gg/articles/96e65c2522c527")[こちら])が、先述したようにletするときにデフォルトを固定しないといけないというのと、level3の文字サイズが`dd*ddd` emになるというのが地味に受け付けなかったのでこのようにしました。
@@ -195,7 +189,7 @@ place(right)を使いたい時ってのは単に右側に置きたいだけで�
     #math-ul()[好きな公式は$E = m c^2$です。]
   ],
 )
-まあ、数式に対して機能しないunderlineに変わってboxを配置し、底辺にのみstrokeをつけただけです。卒論・修論においては使うことないと思うが、スライドやポスター制作においては少なくとも筆者的には重宝した。
+まあ、数式に対して機能しないunderlineに変わってboxを配置し、底辺にのみstrokeをつけただけです。卒論・修論においては使うことないと思うけどね。
 
 == 有用なパッケージ<chap_package>
 main.typの冒頭にあるように、`#import`は自前のtypファイルのみならず他パッケージも導入することができる。ここでは自分が使用した有用パッケージを紹介する。

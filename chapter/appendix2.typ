@@ -1,6 +1,6 @@
 #import "../theme/template.typ": *
 
-= dictionary
+== dictionary
 これが生きるタイプの修論だったというのもあるだろうが、筆者はこのdictionaryの存在がとっっても役に立ったので、紹介する。
 
 以下のような形式で、key-valueのマップを定義することが可能。以下の例を見れば大体使い方がわかるだろう。
@@ -205,8 +205,8 @@ i==2のとき、つまりデータ部分3行目を出力する際に追加でsub
     if y == 0 or y == 1 { gray.lighten(60%) }
     else if x == 0 { gray.lighten(80%) }
   },
-  
-  table.cell(rowspan: 2, align: horizon)[*Target Class*], 
+
+  table.cell(rowspan: 2, align: horizon)[*Target Class*],
   table.cell(colspan: 2)[*Model Comparison (Precision)*],
   [*Model A (SVM)*], [*Model B (CNN)*],
 
@@ -215,7 +215,7 @@ i==2のとき、つまりデータ部分3行目を出力する際に追加でsub
   [Cherry], [0.78], [0.82],
 
   [*Top-3 Average*], [*0.850*], [*0.866*],
-  
+
   [Grape], [0.88], [0.85],
   [Orange], [0.90], [0.93],
 
@@ -223,3 +223,48 @@ i==2のとき、つまりデータ部分3行目を出力する際に追加でsub
 )
 ```
 まーそもそもtypstだとtableが書きやすいのでこれを修正する必要が出てきた、となったとていうほど面倒ではないが、これがもっと行・列が増える場合や、似たような表をたくさん書く必要がある場合にはその限りではないと思う。
+
+ちなみに、わざわざ自前でdictionaryを定義せずとも、もとより結果をjsonとかyamlとかにまとめておけば同様のことができる。実験なんかで処理したデータをそのまま使えるという意味ではこちらで統一した方が楽だろう。
+
+```typst
+  #let data = json(path("../chapter/data.json"))
+
+  #table(
+    columns: 3,
+    stroke: none,
+    ..(
+      table.hline(y: 0),
+      table.hline(y: 2, stroke: .5pt),
+      table.hline(y: 8, stroke: (dash: "dashed")),
+      table.hline(y: 9),
+    ),
+    align: (x, y) => if x == 0 { left } else { center },
+    fill: (x, y) => {
+      if y == 0 or y == 1 { gray.lighten(60%) } else if x == 0 { gray.lighten(80%) }
+    },
+    table.cell(rowspan: 2, align: horizon)[*Target Class*],
+    table.cell(colspan: 2)[*Model Comparison (Precision)*],
+    [*Model A (SVM)*], [*Model B (CNN)*],
+
+    ..for (i, name) in data.classes.enumerate() {
+      let row = (
+        name,
+        [#data.model_A.scores.at(i)],
+        [#data.model_B.scores.at(i)],
+      )
+
+      if i == 2 {
+        let subtotal = (
+          [*Top-3 Average*],
+          [*#data.model_A.average*],
+          [*#data.model_B.average*],
+        )
+        row + subtotal
+      } else {
+        row
+      }
+    },
+
+    [*Overall Accuracy*], data.model_A.total_accuracy, data.model_B.total_accuracy,
+  )
+```
